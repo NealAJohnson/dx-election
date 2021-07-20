@@ -11,7 +11,7 @@
         [dataSource]="dataSource"
         [opacity]="usaLayerOpacity"
         type="area"
-        [colorGroupingField]="'democracy' + year"
+        [colorGroupingField]="'democracy2012'"
         [colorGroups]="[0, 0.5, 1]"
         [palette]="[ '#3689d6', '#e55253' ]"
         [label]="{
@@ -28,7 +28,7 @@
     <dxi-layer
         [dataSource]="countyDataSource"
         type="area"
-        [colorGroupingField]="'democracy' + year"
+        [colorGroupingField]="'democracy2012'"
         [colorGroups]="[0, 0.5, 1]"
         [palette]="[ '#3689d6', '#e55253' ]"
         [label]="{

@@ -35,10 +35,6 @@ export class MapComponent {
     isMapCentered = true;
     private currentMapCenter: Array<any> = [];
 
-    @Input() year: string;
-
-    @Output() onViewChanged = new EventEmitter<any>();
-
     constructor(private statesService: StatesService, private countiesService: CountiesService) {
         this.loadStatesMap();
     }
@@ -46,7 +42,6 @@ export class MapComponent {
     loadStatesMap() {
         this.statesService.getFullData().then(data => {
             this.dataSource = data;
-            this.onViewChanged.emit(this.dataSource);
             this.showBackButton = false;
         });
     }
@@ -66,7 +61,6 @@ export class MapComponent {
         this.countiesService.getLayerData(code).then(data => {
             this.countyDataSource = data;
             this.usaLayerOpacity = 0.3;
-            this.onViewChanged.emit(this.countyDataSource);
             this.showBackButton = true;
             this.title = stateName;
         });
@@ -104,7 +98,7 @@ export class MapComponent {
 
     customizeTooltip(info: any) {
         let html = '<div class="tooltip-name">' + info.attribute('NAME') + '</div>',
-            votesObj: any = info.attribute('votes')[this.year],
+            votesObj: any = info.attribute('votes')['2012'],
             votesArray: Array<any> = votesObj.votes,
             total = votesObj.total,
             electoralVotes: Array<any> = [],

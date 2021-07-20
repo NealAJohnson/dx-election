@@ -9,16 +9,5 @@ import { VotesService } from './votes.service';
 })
 
 export class AppComponent {
-    currentYear = '2016';
-    data: any;
-
     constructor() { }
-
-    mapChanged(data) {
-        this.data = data;
-    }
-
-    yearChanged(year) {
-        this.currentYear = year;
-    }
 }

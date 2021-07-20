@@ -23,7 +23,7 @@ export class StatesService {
             });
         });
 
-        return [minLon, maxLat, maxLon, minLat];
+        return [minLon - .25, maxLat + .25, maxLon + .25, minLat - .25];
     }
 
     getFullData(): Promise<any> {
