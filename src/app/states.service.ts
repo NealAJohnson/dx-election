@@ -5,7 +5,7 @@ import { VotesService } from './votes.service';
 @Injectable()
 export class StatesService {
     private statesBounds: Object = {};
-
+    private data: any;
     constructor(private votes: VotesService) { }
 
     collectBounds(coordinates: Array<Array<Array<number>>>): Array<number> {
@@ -27,6 +27,9 @@ export class StatesService {
     }
 
     getFullData(): Promise<any> {
+      if (this.data) {
+        return new Promise((resolve, reject) => {resolve(this.data)});
+      }
         return new Promise((resolve, reject) => {
             MapUtils.parseMapData('data/usa', (data) => {
 
@@ -44,11 +47,11 @@ export class StatesService {
                   postal = feature.properties['STUSPS'],
                   bounds = this.collectBounds(feature.geometry.coordinates);
 
-                feature.properties['selected'] = 1;
+                feature.properties['selected'] = 0;
 
                 this.statesBounds[code] = bounds;
               });
-
+              this.data = data;
               resolve(data);
 
             });
