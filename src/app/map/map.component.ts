@@ -47,7 +47,6 @@ export class MapComponent {
     }
 
     mapClick(e: any) {
-        console.log(e);
         if (e.target === undefined) { return; }
 
         let code = e.target.attribute('STATEFP');
