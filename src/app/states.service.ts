@@ -38,25 +38,18 @@ export class StatesService {
                     }
                 });
 
-                this.votes.getFullData().then(votesData => {
-                    data.features.forEach(feature => {
+              data.features.forEach(feature => {
 
-                        let code = feature.properties['STATEFP'],
-                            postal = feature.properties['STUSPS'],
-                            bounds = this.collectBounds(feature.geometry.coordinates);
+                let code = feature.properties['STATEFP'],
+                  postal = feature.properties['STUSPS'],
+                  bounds = this.collectBounds(feature.geometry.coordinates);
 
-                        let resultForState = this.votes.getResultForState(postal, votesData);
+                feature.properties['selected'] = 1;
 
-                        feature.properties.votes = resultForState;
-                        ['2012', '2016'].forEach(year => {
-                            feature.properties['democracy' + year] = resultForState['democracy' + year];
-                        });
+                this.statesBounds[code] = bounds;
+              });
 
-                        this.statesBounds[code] = bounds;
-                    });
-
-                    resolve(data);
-                });
+              resolve(data);
 
             });
         });

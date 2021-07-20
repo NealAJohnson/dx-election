@@ -11,15 +11,15 @@
         [dataSource]="dataSource"
         [opacity]="usaLayerOpacity"
         type="area"
-        [colorGroupingField]="'democracy2012'"
+        [colorGroupingField]="'selected'"
         [colorGroups]="[0, 0.5, 1]"
-        [palette]="[ '#228189', '#E4E7E9' ]">
+        [palette]="[ '#E4E7E9', '#228189'  ]">
     </dxi-layer>
     <dxi-layer
         [dataSource]="countyDataSource"
         type="area"
-        [colorGroupingField]="'democracy2012'"
+        [colorGroupingField]="'selected'"
         [colorGroups]="[0, 0.5, 1]"
-        [palette]="[ '#228189', '#E4E7E9' ]">
+        [palette]="[ '#E4E7E9', '#228189' ]">
     </dxi-layer>
 </dx-vector-map>

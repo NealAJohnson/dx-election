@@ -4,58 +4,49 @@ import { VotesService } from './votes.service';
 
 @Injectable()
 export class CountiesService {
-    private promise: Promise<any>;
+    private data: any;
 
     constructor(private votes: VotesService) {
+        let featureCollection: Array<any> = [];
 
-        this.promise = new Promise((resolve, reject) => {
+        MapUtils.parseMapData('data/county', (data) => {
 
-            let featureCollection: Array<any> = [];
+                data.features.forEach(feature => {
+                    let stateFp = feature.properties['STATEFP'],
+                        fips = feature.properties['GEOID'];
 
-            MapUtils.parseMapData('data/county', (data) => {
+                    if (featureCollection[stateFp] === undefined) {
+                        featureCollection[stateFp] = [];
+                    }
 
-                votes.getFullData().then(votesData => {
-                    data.features.forEach(feature => {
-                        let stateFp = feature.properties['STATEFP'],
-                            fips = feature.properties['GEOID'];
+                    feature.properties['selected'] = 0;
 
-                        if (featureCollection[stateFp] === undefined) {
-                            featureCollection[stateFp] = [];
-                        }
-
-                        let result = votes.getResultForCounty(stateFp, fips, votesData);
-                        feature.properties.votes = result;
-                        ['2012', '2016'].forEach(year => {
-                            feature.properties['democracy' + year] = result['democracy' + year];
-                        });
-
-                        featureCollection[stateFp].push(feature);
-                    });
-
-                    resolve(featureCollection);
+                    featureCollection[stateFp].push(feature);
                 });
+
+                this.data = featureCollection;
             });
-        });
 
     }
 
-    getLayerData(stateFp: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+    getLayerData(stateFp: string): any {
             let result = {
                 type: 'FeatureCollection',
                 features: {}
             };
-
-            this.promise.then(featureCollection => {
-                result.features = featureCollection[stateFp].sort((a, b) => {
-                    if (a.properties['NAME'] > b.properties['NAME']) {
-                        return 1;
-                    } else {
-                        return -1;
-                    }
-                });
-                resolve(result);
+            result.features = this.data[stateFp].sort((a, b) => {
+                if (a.properties['NAME'] > b.properties['NAME']) {
+                    return 1;
+                } else {
+                    return -1;
+                }
             });
-        });
+            console.log(result);
+            return result;
+    }
+
+    toggleCountySelection(stateCode: string, countyName: string) {
+        let countyIndex = this.data[stateCode].findIndex(item => item.properties['NAME'] === countyName);
+        this.data[stateCode][countyIndex].properties['selected'] = (this.data[stateCode][countyIndex].properties['selected'] === 0) ? 1 : 0;
     }
 }

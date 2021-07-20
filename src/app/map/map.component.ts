@@ -1,7 +1,7 @@
-import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { StatesService } from '../states.service';
-import { CountiesService } from '../counties.service';
-import { DxVectorMapComponent } from 'devextreme-angular';
+import {Component, ViewChild} from '@angular/core';
+import {StatesService} from '../states.service';
+import {CountiesService} from '../counties.service';
+import {DxVectorMapComponent} from 'devextreme-angular';
 
 @Component({
     selector: 'app-map',
@@ -50,20 +50,20 @@ export class MapComponent {
         if (e.target === undefined) { return; }
 
         let code = e.target.attribute('STATEFP');
-        let stateName = e.target.attribute('NAME');
-
-        if (e.target.layer.index !== 0) { return; }// counties layer
+        let stateOrCountyName = e.target.attribute('NAME');
+        if (e.target.layer.index !== 0) {
+          this.countiesService.toggleCountySelection(code, stateOrCountyName);
+          this.countyDataSource = this.countiesService.getLayerData(code);
+          return;
+        }
         if (code === '02' || code === '15') { return; } // no data for Alaska & Hawaii
 
         this.bounds = this.statesService.getBoundsByCode(code);
         this.isMapCentered = true;
-
-        this.countiesService.getLayerData(code).then(data => {
-            this.countyDataSource = data;
-            this.usaLayerOpacity = 0.3;
-            this.showBackButton = true;
-            this.title = stateName;
-        });
+        this.countyDataSource = this.countiesService.getLayerData(code);
+        this.usaLayerOpacity = 0.3;
+        this.showBackButton = true;
+        this.title = stateOrCountyName;
     }
 
     backToStates() {
@@ -95,57 +95,7 @@ export class MapComponent {
     }
 
     customizeTooltip(info: any) {
-        let html = '<div class="tooltip-name">' + info.attribute('NAME') + '</div>',
-            votesObj: any = info.attribute('votes')['2012'],
-            votesArray: Array<any> = votesObj.votes,
-            total = votesObj.total,
-            electoralVotes: Array<any> = [],
-            votesString = '',
-            electoralVotesString = '';
-
-        votesArray.forEach(vote => {
-            let count = vote.VotesCount,
-                percent = Math.round(count / total * 10000) / 100,
-                name = vote.Name,
-                type = vote.CandidateType,
-                electoral = vote.ElectoralVotes;
-
-            if (electoral > 0) {
-                electoralVotes.push({ name: name, electoralVotes: electoral, type: type });
-            }
-
-            if (count > 0) {
-                votesString += (
-                    '<div>' +
-                    '<span class="candidate-square type' + type + '"></span>' +
-                    '<span class="candidate-name">' + name + '</span> ' +
-                    '<span class="candidate-bold">' + percent + '%</span> ' +
-                    '(<span class="candidate-count">' + count + '</span>)' +
-                    '</div>'
-                );
-            }
-        });
-
-        html += votesString;
-
-        if (electoralVotes.length > 0) {
-            electoralVotesString += '<div class="electoral-votes">';
-
-            electoralVotes.forEach(vote => {
-                electoralVotesString +=
-                    '<div>' +
-                    '<span class="candidate-square type' + vote.type + '"></span>' +
-                    '<span class="candidate-bold">' + vote.electoralVotes + '</span> electoral ' +
-                        (vote.electoralVotes === '1' ? 'vote' : 'votes') + ' going to ' +
-                    '<span class="candidate-bold">' + vote.name + '</span> ' +
-                    '</div>';
-            });
-
-            electoralVotesString += '</div>';
-        }
-
-        html += electoralVotesString;
-
+        let html = '<div class="tooltip-name">' + info.attribute('NAME') + '</div>';
         return {
             html: html
         }
