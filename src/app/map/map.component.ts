@@ -47,6 +47,7 @@ export class MapComponent {
     }
 
     mapClick(e: any) {
+        console.log(e);
         if (e.target === undefined) { return; }
 
         let code = e.target.attribute('STATEFP');
@@ -64,8 +65,6 @@ export class MapComponent {
             this.showBackButton = true;
             this.title = stateName;
         });
-
-        this.vectorMap.instance.showLoadingIndicator();
     }
 
     backToStates() {
