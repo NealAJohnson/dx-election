@@ -20,7 +20,5 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Live Example
 A live example is available at [https://devexpress.github.io/dx-election/](https://devexpress.github.io/dx-election/).
 
-## Notes
-colorGroupingField will be 'selected'
-The 'selected' variable will be 0 for not selected, 1 for selected
-datasource will be constantly updated based on user click as well as text box selection
+## Census data
+Shape data can be found [here](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html).

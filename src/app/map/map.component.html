@@ -1,25 +1,28 @@
-<dx-button class="back-button" text="Back to States" width="120" (click)="backToStates()" [visible]="showBackButton"></dx-button>
-<dx-button class="center-button" text="Center Map" width="120" (click)="centerMap()" [disabled]="isMapCentered" ></dx-button>
-<dx-vector-map class="map" [bounds]="bounds" [tooltip]="tooltip"
-    (onClick)="mapClick($event)" (onInitialized)="initialized($event)" (onCenterChanged)="centerChanged($event)">
-    <dxo-control-bar [enabled]="false"></dxo-control-bar>
-    <dxo-size [height]="420"></dxo-size>
-    <dxo-title [text]="title" [subtitle]="subtitle"></dxo-title>
-    <dxo-background borderColor="#fff"></dxo-background>
+<dx-button (click)="backToStates()" [visible]="showBackButton" class="back-button" text="Back to States"
+           width="120"></dx-button>
+<dx-button (click)="centerMap()" [disabled]="isMapCentered" class="center-button" text="Center Map"
+           width="120"></dx-button>
+<dx-vector-map (onCenterChanged)="centerChanged($event)" (onClick)="mapClick($event)" (onInitialized)="initialized($event)"
+               [bounds]="bounds" [tooltip]="tooltip"
+               class="map">
+  <dxo-control-bar [enabled]="false"></dxo-control-bar>
+  <dxo-size [height]="420"></dxo-size>
+  <dxo-title [subtitle]="subtitle" [text]="title"></dxo-title>
+  <dxo-background borderColor="#fff"></dxo-background>
 
-    <dxi-layer
-        [dataSource]="dataSource"
-        [opacity]="usaLayerOpacity"
-        type="area"
-        [colorGroupingField]="'selected'"
-        [colorGroups]="[0, 0.5, 1]"
-        [palette]="[ '#E4E7E9', '#228189'  ]">
-    </dxi-layer>
-    <dxi-layer
-        [dataSource]="countyDataSource"
-        type="area"
-        [colorGroupingField]="'selected'"
-        [colorGroups]="[0, 0.5, 1]"
-        [palette]="[ '#E4E7E9', '#228189' ]">
-    </dxi-layer>
+  <dxi-layer
+    [colorGroupingField]="'selected'"
+    [colorGroups]="[0, 0.5, 1]"
+    [dataSource]="dataSource"
+    [opacity]="usaLayerOpacity"
+    [palette]="[ '#E4E7E9', '#228189' ]"
+    type="area">
+  </dxi-layer>
+  <dxi-layer
+    [colorGroupingField]="'selected'"
+    [colorGroups]="[0, 0.5, 1]"
+    [dataSource]="countyDataSource"
+    [palette]="[ '#E4E7E9', '#228189' ]"
+    type="area">
+  </dxi-layer>
 </dx-vector-map>

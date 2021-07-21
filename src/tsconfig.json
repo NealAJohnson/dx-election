@@ -5,7 +5,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "mapRoot": "./",
     "module": "es6",
     "moduleResolution": "node",
@@ -16,7 +19,9 @@
       "../node_modules/@types"
     ],
     "paths": {
-      "jszip": [ "../node_modules/jszip/dist/jszip.min.js" ],
+      "jszip": [
+        "../node_modules/jszip/dist/jszip.min.js"
+      ]
     }
   }
 }

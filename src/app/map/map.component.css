@@ -1,27 +1,27 @@
 .map {
-    display: block;
-    clear: both;
-    margin-top: 30px;
-    height: 420px;
+  display: block;
+  clear: both;
+  margin-top: 30px;
+  height: 420px;
 }
 
 .back-button,
 .center-button {
-    position: relative;
-    top: 44px;
-    color: #808080;
-    z-index: 1;
+  position: relative;
+  top: 44px;
+  color: #808080;
+  z-index: 1;
 }
 
 ::ng-deep .back-button .dx-button-content,
 ::ng-deep .center-button .dx-button-content {
-    padding: 7px 15px 8px;
+  padding: 7px 15px 8px;
 }
 
 .back-button {
-    float: left;
+  float: left;
 }
 
 .center-button {
-    float: right;
+  float: right;
 }

@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { VotesService } from './votes.service';
+import {Component} from '@angular/core';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    providers: [ VotesService ]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
-    constructor() { }
+  constructor() {
+  }
 }
